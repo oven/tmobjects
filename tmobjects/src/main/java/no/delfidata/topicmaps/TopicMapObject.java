@@ -63,4 +63,13 @@ public abstract class TopicMapObject {
 		return util.findBinaryPlayers( associationTypePsi, topic, myRoleTypePsi, wantedRoleTypePsi );
 	}
 
+	public void associateWithTopic( TopicMapObject otherTopic, String associationTypePsi, String myRolePsi, String otherRolePsi ) {
+		new AssociationBuilder( tm ).createAssociation( associationTypePsi ).addRole( topic, myRolePsi ).addRole( otherTopic,
+				otherRolePsi );
+	}
+
+	public TopicIF getTopic() {
+		return topic;
+	}
+
 }

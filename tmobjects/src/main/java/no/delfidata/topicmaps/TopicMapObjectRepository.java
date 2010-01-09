@@ -19,6 +19,7 @@ public class TopicMapObjectRepository {
 
 	public TopicMapObject getByPsi( String psi ) {
 		TopicIF topic = util.getTopicByPsi( psi );
+		if (null == topic) throw new TopicNotFoundException( psi );
 		return createInstance( topic );
 	}
 

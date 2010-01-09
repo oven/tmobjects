@@ -53,13 +53,13 @@ public class TopicMapObjectTest {
 
 	@Test
 	public void getOccurrenceValue() {
-		TopicMapObject testObj = repository.getByPsi( "http://psi.example.org/the_beatles" );
+		TopicMapObject testObj = repository.getByPsi( "ex:the_beatles" );
 		assertEquals( "Heart-throb 60's group.", testObj.getOccurrenceValue( "http://psi.ontopia.net/ontology/description" ) );
 	}
 
 	@Test
 	public void setOccurrenceValue() {
-		TopicMapObject testObj = repository.getByPsi( "http://psi.example.org/the_beatles" );
+		TopicMapObject testObj = repository.getByPsi( "ex:the_beatles" );
 		testObj.setOccurrenceValue( "http://psi.ontopia.net/ontology/description", "foo" );
 		assertEquals( "foo", testObj.getOccurrenceValue( "http://psi.ontopia.net/ontology/description" ) );
 	}
@@ -69,5 +69,14 @@ public class TopicMapObjectTest {
 		TopicMapObject testObj = repository.getByPsi( "ex:the_beatles" );
 		List<TopicIF> topics = testObj.getAssociatedTopics( "ex:album-created-by", "ex:artist", "ex:album" );
 		assertEquals( 2, topics.size() );
+	}
+
+	@Test
+	public void associateWithOtherTopic() {
+		TopicMapObject testObj = repository.getByPsi( "ex:the_beatles" );
+		TopicMapObject album = repository.getByPsi( "ex:ChaosAndCreationInTheBackyard" );
+		testObj.associateWithTopic( album, "ex:album-created-by", "ex:artist", "ex:album" );
+		List<TopicIF> topics = testObj.getAssociatedTopics( "ex:album-created-by", "ex:artist", "ex:album" );
+		assertEquals( 3, topics.size() );
 	}
 }
