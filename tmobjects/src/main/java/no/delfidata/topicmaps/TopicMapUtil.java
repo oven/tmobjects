@@ -20,16 +20,12 @@ import net.ontopia.utils.ObjectUtils;
 @SuppressWarnings("unchecked")
 public class TopicMapUtil {
 	private final TopicMapIF tm;
-	private static final Map<String, String> replacements;
-
-	static {
-		replacements = new HashMap<String, String>();
-		replacements.put( "ont:", "http://psi.ontopia.net/ontology/" );
-		replacements.put( "ex:", "http://psi.example.org/" );
-	}
+	private final Map<String, String> replacements = new HashMap<String, String>();
 
 	public TopicMapUtil( TopicMapIF tm ) {
 		this.tm = tm;
+		replacements.put( "ont:", "http://psi.ontopia.net/ontology/" );
+		replacements.put( "ex:", "http://psi.example.org/" );
 	}
 
 	public String getSortName( TopicIF topic ) {
