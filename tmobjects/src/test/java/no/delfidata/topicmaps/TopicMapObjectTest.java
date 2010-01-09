@@ -13,18 +13,18 @@ import net.ontopia.topicmaps.entry.TopicMaps;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TmObjectTest {
+public class TopicMapObjectTest {
 
 	private TopicMapStoreIF store;
 	private TopicMapIF tm;
-	private TmObjectRepository repository;
+	private TopicMapObjectRepository repository;
 
 	@Before
 	public void setUp() throws Exception {
 		store = TopicMaps.createStore( "JillsMusic.xtm", false );
 		tm = store.getTopicMap();
 		assertNotNull( tm );
-		repository = new TmObjectRepository( tm );
+		repository = new TopicMapObjectRepository( tm );
 		repository.addClass( Album.class );
 		repository.addClass( Artist.class );
 		repository.addClass( Group.class );
@@ -32,7 +32,7 @@ public class TmObjectTest {
 
 	@Test
 	public void getTopic() {
-		TmObject testObj = repository.getByPsi( "http://psi.example.org/AHardDaysNightAlbum" );
+		TopicMapObject testObj = repository.getByPsi( "http://psi.example.org/AHardDaysNightAlbum" );
 		assertEquals( "A Hard Day's Night", testObj.getName() );
 	}
 
@@ -44,7 +44,7 @@ public class TmObjectTest {
 
 	@Test
 	public void setTopicName() {
-		TmObject testObj = repository.getByPsi( "ex:AHardDaysNightAlbum" );
+		TopicMapObject testObj = repository.getByPsi( "ex:AHardDaysNightAlbum" );
 		assertEquals( "A Hard Day's Night", testObj.getName() );
 		testObj.setName( "foo" );
 		assertEquals( "foo", testObj.getName() );
@@ -53,20 +53,20 @@ public class TmObjectTest {
 
 	@Test
 	public void getOccurrenceValue() {
-		TmObject testObj = repository.getByPsi( "http://psi.example.org/the_beatles" );
+		TopicMapObject testObj = repository.getByPsi( "http://psi.example.org/the_beatles" );
 		assertEquals( "Heart-throb 60's group.", testObj.getOccurrenceValue( "http://psi.ontopia.net/ontology/description" ) );
 	}
 
 	@Test
 	public void setOccurrenceValue() {
-		TmObject testObj = repository.getByPsi( "http://psi.example.org/the_beatles" );
+		TopicMapObject testObj = repository.getByPsi( "http://psi.example.org/the_beatles" );
 		testObj.setOccurrenceValue( "http://psi.ontopia.net/ontology/description", "foo" );
 		assertEquals( "foo", testObj.getOccurrenceValue( "http://psi.ontopia.net/ontology/description" ) );
 	}
 
 	@Test
 	public void getAssociatedTopics() {
-		TmObject testObj = repository.getByPsi( "ex:the_beatles" );
+		TopicMapObject testObj = repository.getByPsi( "ex:the_beatles" );
 		List<TopicIF> topics = testObj.getAssociatedTopics( "ex:album-created-by", "ex:artist", "ex:album" );
 		assertEquals( 2, topics.size() );
 	}

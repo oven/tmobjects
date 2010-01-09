@@ -10,13 +10,13 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 
-public abstract class TmObject {
+public abstract class TopicMapObject {
 	protected final TopicIF topic;
 	protected final TopicMapBuilderIF builder;
 	protected final TopicMapIF tm;
 	protected final TopicMapUtil util;
 
-	public TmObject( TopicIF topic ) {
+	public TopicMapObject( TopicIF topic ) {
 		this.topic = topic;
 		this.tm = topic.getTopicMap();
 		this.builder = tm.getBuilder();
