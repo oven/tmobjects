@@ -2,6 +2,10 @@ package no.delfidata.topicmaps;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+
+import java.util.List;
+
+import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.entry.TopicMaps;
@@ -58,5 +62,12 @@ public class TmObjectTest {
 		TmObject testObj = repository.getByPsi( "http://psi.example.org/the_beatles" );
 		testObj.setOccurrenceValue( "http://psi.ontopia.net/ontology/description", "foo" );
 		assertEquals( "foo", testObj.getOccurrenceValue( "http://psi.ontopia.net/ontology/description" ) );
+	}
+
+	@Test
+	public void getAssociatedTopics() {
+		TmObject testObj = repository.getByPsi( "ex:the_beatles" );
+		List<TopicIF> topics = testObj.getAssociatedTopics( "ex:album-created-by", "ex:artist", "ex:album" );
+		assertEquals( 2, topics.size() );
 	}
 }

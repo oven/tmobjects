@@ -1,6 +1,7 @@
 package no.delfidata.topicmaps;
 
 import java.util.Iterator;
+import java.util.List;
 
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -10,7 +11,6 @@ import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 
 public abstract class TmObject {
-
 	protected final TopicIF topic;
 	protected final TopicMapBuilderIF builder;
 	protected final TopicMapIF tm;
@@ -57,6 +57,10 @@ public abstract class TmObject {
 
 	protected final String notNull( String string ) {
 		return string == null ? "" : string;
+	}
+
+	public List<TopicIF> getAssociatedTopics( String associationTypePsi, String myRoleTypePsi, String wantedRoleTypePsi ) {
+		return util.findBinaryPlayers( associationTypePsi, topic, myRoleTypePsi, wantedRoleTypePsi );
 	}
 
 }

@@ -129,45 +129,40 @@ public class TopicMapUtil {
 		return null;
 	}
 
-	public TopicIF[] findBinaryPlayers( TopicIF associationType, TopicIF player, TopicIF nearRole, TopicIF farRole ) {
+	public List<TopicIF> findBinaryPlayers( TopicIF associationType, TopicIF player, TopicIF nearRole, TopicIF farRole ) {
 		return findBinaryPlayers( associationType, player, nearRole, farRole, null );
 	}
 
-	public TopicIF[] findBinaryPlayers( String associationTypePsi, TopicIF player, String nearRolePsi, String farRolePsi ) {
+	public List<TopicIF> findBinaryPlayers( String associationTypePsi, TopicIF player, String nearRolePsi, String farRolePsi ) {
 		return findBinaryPlayers( associationTypePsi, player, nearRolePsi, farRolePsi, null );
 	}
 
-	public TopicIF[] findBinaryPlayers( String associationTypePsi, TopicIF player, String nearRolePsi, String farRolePsi, TopicIF theme ) {
+	public List<TopicIF> findBinaryPlayers( String associationTypePsi, TopicIF player, String nearRolePsi, String farRolePsi,
+			TopicIF theme ) {
 		TopicIF aType = getTopicByPsi( associationTypePsi );
 		TopicIF near = getTopicByPsi( nearRolePsi );
 		TopicIF far = getTopicByPsi( farRolePsi );
 		return findBinaryPlayers( aType, player, near, far, theme );
 	}
 
-	public TopicIF[] findBinaryPlayers( TopicIF aType, TopicIF player1, TopicIF rType1, TopicIF rType2, TopicIF theme ) {
+	public List<TopicIF> findBinaryPlayers( TopicIF associationType, TopicIF player, TopicIF playerRoleType, TopicIF wantedRoleType,
+			TopicIF theme ) {
 		List<TopicIF> result = new ArrayList<TopicIF>();
-		Iterator iter = player1.getRolesByType( rType1, aType ).iterator();
-
-		while (iter.hasNext()) {
-			AssociationRoleIF role1 = (AssociationRoleIF)iter.next();
-
+		Collection<AssociationRoleIF> playerRoles = player.getRolesByType( playerRoleType, associationType );
+		for (AssociationRoleIF role1 : playerRoles) {
 			AssociationIF assoc = role1.getAssociation();
 			Collection scope = assoc.getScope();
 			if (theme != null && !(scope.size() == 1 && scope.contains( theme ))) continue;
 			if (theme == null && scope.size() > 0) continue;
-			Collection roles = assoc.getRoles();
+			Collection<AssociationRoleIF> roles = assoc.getRoles();
 			if (roles.size() != 2) continue;
-
-			Iterator riter = roles.iterator();
-			while (riter.hasNext()) {
-				AssociationRoleIF role2 = (AssociationRoleIF)riter.next();
+			for (AssociationRoleIF role2 : roles) {
 				if (ObjectUtils.different( role1, role2 )) {
 					result.add( role2.getPlayer() );
 				}
 			}
 		}
-
-		return result.toArray( new TopicIF[result.size()] );
+		return result;
 	}
 
 	public TopicIF getTopicByPsi( String psi ) {
