@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+	<storage id="default">
+		<source class="net.ontopia.topicmaps.xml.XTMPathTopicMapSource">
+			<param name="path" value="${CWD}" />
+			<param name="suffix" value=".xtm" />
+			<param name="duplicateSuppression" value="false" />
+			<param name="validation" value="false" />
+		</source>
+	</storage>
+</config>
+		

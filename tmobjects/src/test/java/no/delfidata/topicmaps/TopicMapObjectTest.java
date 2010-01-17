@@ -3,7 +3,9 @@ package no.delfidata.topicmaps;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -24,8 +26,12 @@ public class TopicMapObjectTest {
 		store = TopicMaps.createStore( "JillsMusic.xtm", false );
 		tm = store.getTopicMap();
 		assertNotNull( tm );
+
+		Map<String, Class<? extends TopicMapObject>> classes = new HashMap<String, Class<? extends TopicMapObject>>();
+		classes.put( Album.PSI, Album.class );
+
 		repository = new TopicMapObjectRepository( tm );
-		repository.addClass( Album.class );
+		repository.setClasses( classes );
 		repository.addClass( Artist.class );
 		repository.addClass( Group.class );
 	}

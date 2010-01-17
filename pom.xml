@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>no.delfidata.topicmaps</groupId>
 	<artifactId>tmobjects-parent</artifactId>
@@ -10,7 +9,8 @@
 	<modules>
 		<module>tmobjects</module>
 		<module>examples</module>
-	</modules>
+    <module>tmobjects-spring</module>
+  </modules>
 	<dependencies>
 		<dependency>
 			<groupId>net.ontopia</groupId>
@@ -84,6 +84,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
 				<configuration>
+					<wtpversion>2.0</wtpversion>
 					<downloadSources>true</downloadSources>
 					<downloadJavadocs>true</downloadJavadocs>
 				</configuration>

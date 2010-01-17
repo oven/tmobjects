@@ -11,9 +11,15 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 public class TopicMapObjectRepository {
 
 	private final Map<String, Class<? extends TopicMapObject>> classes = new HashMap<String, Class<? extends TopicMapObject>>();
-	private final TopicMapUtil util;
+	private TopicMapUtil util;
+
+	public TopicMapObjectRepository() {}
 
 	public TopicMapObjectRepository( TopicMapIF tm ) {
+		setTopicMap( tm );
+	}
+
+	public void setTopicMap( TopicMapIF tm ) {
 		this.util = new TopicMapUtil( tm );
 	}
 
@@ -64,5 +70,10 @@ public class TopicMapObjectRepository {
 		} catch (Exception e) {
 			throw new RuntimeException( e.getMessage(), e );
 		}
+	}
+
+	public void setClasses( Map<String, Class<? extends TopicMapObject>> classes ) {
+		this.classes.clear();
+		this.classes.putAll( classes );
 	}
 }
