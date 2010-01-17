@@ -5,14 +5,12 @@
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
 
-
 	<bean id="repository" class="no.delfidata.topicmaps.TopicMapObjectRepository"
 		scope="prototype">
 		<property name="classes">
-			<util:map value-type="java.lang.Class">
-				<entry key="http://psi.example.org/album"
-					value="no.delfidata.topicmaps.domain.Album" />
-			</util:map>
+			<util:list value-type="java.lang.Class">
+				<value>no.delfidata.topicmaps.domain.Album</value>
+			</util:list>
 		</property>
 	</bean>
 

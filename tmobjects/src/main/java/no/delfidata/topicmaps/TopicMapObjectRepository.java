@@ -2,6 +2,7 @@ package no.delfidata.topicmaps;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.ontopia.infoset.core.LocatorIF;
@@ -39,12 +40,11 @@ public class TopicMapObjectRepository {
 	}
 
 	private String getPsiFromClass( Class<? extends TopicMapObject> theClass ) {
-		try {
-			return (String)theClass.getField( "PSI" ).get( null );
-		} catch (Exception e) {
-			throw new IllegalArgumentException( "Class " + theClass.getName()
-					+ " lacks a public static String PSI. Use addClass(psi, theClass) instead" );
-		}
+		Psi annotation = theClass.getAnnotation( Psi.class );
+		if (null != annotation) return annotation.value();
+
+		throw new IllegalArgumentException( "Class " + theClass.getName()
+				+ " lacks a @Psi annotation. Use addClass(psi, theClass) instead" );
 	}
 
 	private TopicMapObject createInstance( TopicIF topic ) {
@@ -72,8 +72,10 @@ public class TopicMapObjectRepository {
 		}
 	}
 
-	public void setClasses( Map<String, Class<? extends TopicMapObject>> classes ) {
+	public void setClasses( List<Class<? extends TopicMapObject>> classes ) {
 		this.classes.clear();
-		this.classes.putAll( classes );
+		for (Class<? extends TopicMapObject> theClass : classes) {
+			addClass( theClass );
+		}
 	}
 }
