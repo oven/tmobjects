@@ -8,11 +8,9 @@
 	<title>Insert title here</title>
 </head>
 <body>
-	
 	<h1>${topic.name}</h1>
 	<h2>by ${topic.artist}</h2>
 	${topic.description}
-	
 	<h2>Other albums by ${topic.artist}</h2>
 	<table>
 		<tr><th>Title</th><th>Description</th></tr>

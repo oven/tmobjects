@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
 @SuppressWarnings("unchecked")
-public class HelloWorldController implements Controller {
+public class AlbumController implements Controller {
 
 	private String viewName;
 

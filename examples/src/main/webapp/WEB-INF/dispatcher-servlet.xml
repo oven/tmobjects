@@ -31,9 +31,9 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 		</property>
 	</bean>
 
-	<bean name="/hello.do"
-		class="no.delfidata.topicmaps.examples.gui.HelloWorldController">
-		<property name="viewName" value="hello" />
+	<bean name="/album.do"
+		class="no.delfidata.topicmaps.examples.gui.AlbumController">
+		<property name="viewName" value="album" />
 	</bean>
 
 </beans>
