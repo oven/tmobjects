@@ -1,6 +1,5 @@
 package no.delfidata.topicmaps.examples.gui;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,6 +12,7 @@ import no.delfidata.topicmaps.TopicMapObjectRepository;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
+@SuppressWarnings("unchecked")
 public class HelloWorldController implements Controller {
 
 	private String viewName;
@@ -24,8 +24,6 @@ public class HelloWorldController implements Controller {
 	@Override
 	public ModelAndView handleRequest( HttpServletRequest request, HttpServletResponse response ) throws Exception {
 		Map model = new HashMap();
-		model.put( "foo", new Date() );
-
 		TopicMapObjectRepository repository = (TopicMapObjectRepository)request.getAttribute( "repository" );
 		TopicMapObject topic = repository.getByPsi( "http://psi.example.org/AHardDaysNightAlbum" );
 

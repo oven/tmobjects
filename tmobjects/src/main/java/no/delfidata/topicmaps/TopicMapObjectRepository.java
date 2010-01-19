@@ -1,6 +1,7 @@
 package no.delfidata.topicmaps;
 
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 
 public class TopicMapObjectRepository {
 
+	private static ThreadLocal<TopicMapObjectRepository> threadBoundInstance = new ThreadLocal<TopicMapObjectRepository>();
 	private final Map<String, Class<? extends TopicMapObject>> classes = new HashMap<String, Class<? extends TopicMapObject>>();
 	private TopicMapUtil util;
 
@@ -22,6 +24,28 @@ public class TopicMapObjectRepository {
 
 	public void setTopicMap( TopicMapIF tm ) {
 		this.util = new TopicMapUtil( tm );
+	}
+
+	public static void setInstance( TopicMapObjectRepository repository ) {
+		threadBoundInstance.set( repository );
+	}
+
+	public static TopicMapObjectRepository getInstance() {
+		return threadBoundInstance.get();
+	}
+
+	public TopicMapObject createInstance( TopicIF topic ) {
+		Class<? extends TopicMapObject> targetClass = identifyTargetClass( topic );
+		return createInstanceOfTargetClass( topic, targetClass );
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T extends TopicMapObject> List<T> createInstances( Class<T> theclass, List<TopicIF> topics ) {
+		List<T> result = new ArrayList<T>( topics.size() );
+		for (TopicIF topic : topics) {
+			result.add( (T)createInstance( topic ) );
+		}
+		return result;
 	}
 
 	public TopicMapObject getByPsi( String psi ) {
@@ -45,11 +69,6 @@ public class TopicMapObjectRepository {
 
 		throw new IllegalArgumentException( "Class " + theClass.getName()
 				+ " lacks a @Psi annotation. Use addClass(psi, theClass) instead" );
-	}
-
-	private TopicMapObject createInstance( TopicIF topic ) {
-		Class<? extends TopicMapObject> targetClass = identifyTargetClass( topic );
-		return createInstanceOfTargetClass( topic, targetClass );
 	}
 
 	private Class<? extends TopicMapObject> identifyTargetClass( TopicIF topic ) {

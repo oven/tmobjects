@@ -9,4 +9,8 @@ public class Album extends TopicMapObject {
 	public Album( TopicIF topic ) {
 		super( topic );
 	}
+
+	public Artist getArtist() {
+		return (Artist)getAssociatedTopicMapObject( "ex:album-created-by", "ex:album", "ex:artist" );
+	}
 }

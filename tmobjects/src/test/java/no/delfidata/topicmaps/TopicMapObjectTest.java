@@ -33,6 +33,8 @@ public class TopicMapObjectTest {
 		repository.setClasses( classes );
 		repository.addClass( Artist.class );
 		repository.addClass( Album.class );
+
+		TopicMapObjectRepository.setInstance( repository );
 	}
 
 	@Test
@@ -66,7 +68,7 @@ public class TopicMapObjectTest {
 	public void setOccurrenceValue() {
 		TopicMapObject testObj = repository.getByPsi( "ex:the_beatles" );
 		testObj.setOccurrenceValue( "http://psi.ontopia.net/ontology/description", "foo" );
-		assertEquals( "foo", testObj.getOccurrenceValue( "http://psi.ontopia.net/ontology/description" ) );
+		assertEquals( "foo", testObj.getDescription() );
 	}
 
 	@Test
@@ -77,6 +79,34 @@ public class TopicMapObjectTest {
 	}
 
 	@Test
+	public void getAssociatedTopic() {
+		TopicMapObject testObj = repository.getByPsi( "ex:AHardDaysNightAlbum" );
+		TopicIF artist = testObj.getAssociatedTopic( "ex:album-created-by", "ex:album", "ex:artist" );
+		assertNotNull( artist );
+	}
+
+	@Test
+	public void getAssociatedTopicMapObject() {
+		TopicMapObject testObj = repository.getByPsi( "ex:AHardDaysNightAlbum" );
+		Artist artist = (Artist)testObj.getAssociatedTopicMapObject( "ex:album-created-by", "ex:album", "ex:artist" );
+		assertNotNull( artist );
+	}
+
+	@Test
+	public void getAssociatedTopicMapObjectsWithSpecifiedListType() {
+		TopicMapObject testObj = repository.getByPsi( "ex:the_beatles" );
+		List<Album> albums = testObj.getAssociatedTopicMapObjects( Album.class, "ex:album-created-by", "ex:artist", "ex:album" );
+		assertNotNull( albums.get( 0 ) );
+	}
+
+	@Test
+	public void getAssociatedTopicMapObjects() {
+		TopicMapObject testObj = repository.getByPsi( "ex:the_beatles" );
+		List<TopicMapObject> albums = testObj.getAssociatedTopicMapObjects( "ex:album-created-by", "ex:artist", "ex:album" );
+		assertNotNull( albums.get( 0 ) );
+	}
+
+	@Test
 	public void associateWithOtherTopic() {
 		TopicMapObject testObj = repository.getByPsi( "ex:the_beatles" );
 		TopicMapObject album = repository.getByPsi( "ex:ChaosAndCreationInTheBackyard" );
@@ -84,4 +114,11 @@ public class TopicMapObjectTest {
 		List<TopicIF> topics = testObj.getAssociatedTopics( "ex:album-created-by", "ex:artist", "ex:album" );
 		assertEquals( 3, topics.size() );
 	}
+
+	@Test
+	public void toStringReturnsTopicName() {
+		TopicMapObject testObj = repository.getByPsi( "ex:the_beatles" );
+		assertEquals( "The Beatles", testObj.toString() );
+	}
+
 }

@@ -63,6 +63,27 @@ public abstract class TopicMapObject {
 		return util.findBinaryPlayers( associationTypePsi, topic, myRoleTypePsi, wantedRoleTypePsi );
 	}
 
+	public TopicIF getAssociatedTopic( String associationTypePsi, String myRoleTypePsi, String wantedRoleTypePsi ) {
+		List<TopicIF> topics = getAssociatedTopics( associationTypePsi, myRoleTypePsi, wantedRoleTypePsi );
+		if (topics.size() == 0) return null;
+		return topics.get( 0 );
+	}
+
+	public TopicMapObject getAssociatedTopicMapObject( String associationTypePsi, String myRoleTypePsi, String wantedRoleTypePsi ) {
+		TopicIF associatedTopic = getAssociatedTopic( associationTypePsi, myRoleTypePsi, wantedRoleTypePsi );
+		return TopicMapObjectRepository.getInstance().createInstance( associatedTopic );
+	}
+
+	public List<TopicMapObject> getAssociatedTopicMapObjects( String associationTypePsi, String myRoleTypePsi, String wantedRoleTypePsi ) {
+		return getAssociatedTopicMapObjects( TopicMapObject.class, associationTypePsi, myRoleTypePsi, wantedRoleTypePsi );
+	}
+
+	public <T extends TopicMapObject> List<T> getAssociatedTopicMapObjects( Class<T> theclass, String associationTypePsi,
+			String myRoleTypePsi, String wantedRoleTypePsi ) {
+		List<TopicIF> topics = getAssociatedTopics( associationTypePsi, myRoleTypePsi, wantedRoleTypePsi );
+		return TopicMapObjectRepository.getInstance().createInstances( theclass, topics );
+	}
+
 	public void associateWithTopic( TopicMapObject otherTopic, String associationTypePsi, String myRolePsi, String otherRolePsi ) {
 		new AssociationBuilder( tm ).createAssociation( associationTypePsi ).addRole( topic, myRolePsi ).addRole( otherTopic,
 				otherRolePsi );
@@ -70,6 +91,15 @@ public abstract class TopicMapObject {
 
 	public TopicIF getTopic() {
 		return topic;
+	}
+
+	public String getDescription() {
+		return getOccurrenceValue( "http://psi.ontopia.net/ontology/description" );
+	}
+
+	@Override
+	public String toString() {
+		return getName();
 	}
 
 }

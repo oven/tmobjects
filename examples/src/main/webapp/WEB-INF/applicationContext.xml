@@ -10,6 +10,8 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 		<property name="classes">
 			<util:list value-type="java.lang.Class">
 				<value>no.delfidata.topicmaps.domain.Album</value>
+				<value>no.delfidata.topicmaps.domain.Artist</value>
+				<value>no.delfidata.topicmaps.domain.Group</value>
 			</util:list>
 		</property>
 	</bean>

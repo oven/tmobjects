@@ -25,6 +25,7 @@ public class OpenSessionInViewFilter extends OncePerRequestFilter {
 		TopicMapStoreIF store = (TopicMapStoreIF)context.getBean( "topicMapStore" );
 		TopicMapIF tm = store.getTopicMap();
 		repository.setTopicMap( tm );
+		TopicMapObjectRepository.setInstance( repository );
 		request.setAttribute( "repository", repository );
 		request.setAttribute( "tm", tm );
 

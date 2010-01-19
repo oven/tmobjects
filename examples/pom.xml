@@ -48,6 +48,11 @@
 				<configuration>
 					<scanIntervalSeconds>10</scanIntervalSeconds>
 					<useTestClasspath>true</useTestClasspath>
+					<connectors>
+                        <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+                            <port>8081</port>
+                        </connector>
+                    </connectors>
 				</configuration>
 			</plugin>
 		</plugins>
