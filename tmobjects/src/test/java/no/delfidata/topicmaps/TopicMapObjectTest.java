@@ -4,8 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
@@ -67,7 +69,7 @@ public class TopicMapObjectTest {
 	@Test
 	public void setOccurrenceValue() {
 		TopicMapObject testObj = repository.getByPsi( "ex:the_beatles" );
-		testObj.setOccurrenceValue( "http://psi.ontopia.net/ontology/description", "foo" );
+		testObj.setDescription( "foo" );
 		assertEquals( "foo", testObj.getDescription() );
 	}
 
@@ -121,4 +123,22 @@ public class TopicMapObjectTest {
 		assertEquals( "The Beatles", testObj.toString() );
 	}
 
+	@Test
+	public void createNewObject() {
+		Album testObj = new Album( tm );
+		testObj.setPsi( "ex:my_album" );
+		assertNotNull( repository.getByPsi( "ex:my_album" ) );
+	}
+
+	@SuppressWarnings("unchecked")
+	@Test
+	public void setPsiClearsAllPreviousPsis() {
+		Album testObj = new Album( tm );
+		testObj.addPsi( "ex:foo" );
+		testObj.addPsi( "ex:bar" );
+		testObj.setPsi( "ex:blapp" );
+		Collection psis = testObj.getTopic().getSubjectIdentifiers();
+		assertEquals( 1, psis.size() );
+		assertEquals( "http://psi.example.org/blapp", ((LocatorIF)psis.iterator().next()).getAddress() );
+	}
 }

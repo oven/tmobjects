@@ -1,6 +1,7 @@
 package no.delfidata.topicmaps.domain;
 
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import no.delfidata.topicmaps.Psi;
 import no.delfidata.topicmaps.TopicMapObject;
 
@@ -8,6 +9,10 @@ import no.delfidata.topicmaps.TopicMapObject;
 public class Album extends TopicMapObject {
 	public Album( TopicIF topic ) {
 		super( topic );
+	}
+
+	public Album( TopicMapIF tm ) {
+		super( tm );
 	}
 
 	public Artist getArtist() {

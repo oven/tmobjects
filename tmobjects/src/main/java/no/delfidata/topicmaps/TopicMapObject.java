@@ -1,8 +1,11 @@
 package no.delfidata.topicmaps;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
@@ -21,6 +24,36 @@ public abstract class TopicMapObject {
 		this.tm = topic.getTopicMap();
 		this.builder = tm.getBuilder();
 		this.util = new TopicMapUtil( tm );
+	}
+
+	public TopicMapObject( TopicMapIF tm ) {
+		this.util = new TopicMapUtil( tm );
+		this.builder = tm.getBuilder();
+		this.tm = tm;
+		TopicIF topicType = util.getTopicByPsi( getTopicTypePsi() );
+		this.topic = builder.makeTopic( topicType );
+	}
+
+	public String getTopicTypePsi() {
+		return getClass().getAnnotation( Psi.class ).value();
+	}
+
+	public void setPsi( String psi ) {
+		removePsis();
+		addPsi( psi );
+	}
+
+	@SuppressWarnings("unchecked")
+	protected void removePsis() {
+		Collection<LocatorIF> subjectIdentifiers = topic.getSubjectIdentifiers();
+		LocatorIF[] locators = subjectIdentifiers.toArray( new LocatorIF[subjectIdentifiers.size()] );
+		for (LocatorIF locator : locators) {
+			topic.removeSubjectIdentifier( locator );
+		}
+	}
+
+	public void addPsi( String psi ) {
+		topic.addSubjectIdentifier( URILocator.create( util.doReplacements( psi ) ) );
 	}
 
 	public String getName() {
@@ -95,6 +128,10 @@ public abstract class TopicMapObject {
 
 	public String getDescription() {
 		return getOccurrenceValue( "http://psi.ontopia.net/ontology/description" );
+	}
+
+	public void setDescription( String description ) {
+		setOccurrenceValue( "http://psi.ontopia.net/ontology/description", description );
 	}
 
 	@Override

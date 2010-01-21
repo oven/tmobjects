@@ -16,4 +16,10 @@ public class Artist extends TopicMapObject {
 	public List<Album> getAlbums() {
 		return getAssociatedTopicMapObjects( Album.class, "ex:album-created-by", "ex:artist", "ex:album" );
 	}
+
+	public Album createAlbum() {
+		Album result = new Album( topic.getTopicMap() );
+		associateWithTopic( result, "ex:album-created-by", "ex:artist", "ex:album" );
+		return result;
+	}
 }

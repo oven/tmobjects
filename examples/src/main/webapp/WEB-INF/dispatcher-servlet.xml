@@ -31,9 +31,18 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 		</property>
 	</bean>
 
-	<bean name="/album.do"
-		class="no.delfidata.topicmaps.examples.gui.AlbumController">
+	<bean name="/album.do" class="no.delfidata.topicmaps.examples.gui.AlbumController">
 		<property name="viewName" value="album" />
+	</bean>
+
+	<bean name="/artist.do" class="no.delfidata.topicmaps.examples.gui.ArtistController">
+		<property name="viewName" value="artist" />
+	</bean>
+
+	<bean name="/createAlbum.do"
+		class="no.delfidata.topicmaps.examples.gui.CreateAlbumController">
+		<property name="formView" value="createAlbumForm" />
+		<property name="successView" value="redirect:artist.do" />
 	</bean>
 
 </beans>
