@@ -18,4 +18,12 @@ public class Album extends TopicMapObject {
 	public Artist getArtist() {
 		return (Artist)getAssociatedTopicMapObject( "ex:album-created-by", "ex:album", "ex:artist" );
 	}
+
+	public String getCover() {
+		return getOccurrenceValue( "ex:album-cover" );
+	}
+
+	public void setCover( String value ) {
+		setOccurrenceValue( "ex:album-cover", value );
+	}
 }

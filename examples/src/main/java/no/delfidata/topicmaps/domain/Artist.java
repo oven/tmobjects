@@ -22,4 +22,8 @@ public class Artist extends TopicMapObject {
 		associateWithTopic( result, "ex:album-created-by", "ex:artist", "ex:album" );
 		return result;
 	}
+
+	public String getHometown() {
+		return getOccurrenceValue( "ex:hometown" );
+	}
 }

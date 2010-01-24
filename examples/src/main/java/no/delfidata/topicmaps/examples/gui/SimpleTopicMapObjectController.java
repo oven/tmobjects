@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
 @SuppressWarnings("unchecked")
-public class AlbumController implements Controller {
+public class SimpleTopicMapObjectController implements Controller {
 
 	private String viewName;
 
@@ -24,10 +24,11 @@ public class AlbumController implements Controller {
 	@Override
 	public ModelAndView handleRequest( HttpServletRequest request, HttpServletResponse response ) throws Exception {
 		Map model = new HashMap();
-		TopicMapObjectRepository repository = (TopicMapObjectRepository)request.getAttribute( "repository" );
-		TopicMapObject topic = repository.getByPsi( "http://psi.example.org/AHardDaysNightAlbum" );
+		TopicMapObjectRepository repository = TopicMapObjectRepository.getInstance();
 
+		TopicMapObject topic = repository.getById( request.getParameter( "id" ) );
 		model.put( "topic", topic );
+
 		ModelAndView mav = new ModelAndView( viewName );
 		mav.addAllObjects( model );
 		return mav;

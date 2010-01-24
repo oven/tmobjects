@@ -5,17 +5,25 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Insert title here</title>
+	<title>Album: ${topic.name}</title>
 </head>
 <body>
+	<img src="${topic.cover}" style="float:right;"/>
 	<h1>${topic.name}</h1>
-	<h2>by ${topic.artist}</h2>
+	<h2>by <a href="artist.do?id=${topic.artist.id}">${topic.artist}</a></h2>
 	${topic.description}
+
+	<br clear="all"/>	
 	<h2>Other albums by ${topic.artist}</h2>
 	<table>
 		<tr><th>Title</th><th>Description</th></tr>
 		<c:forEach items="${topic.artist.albums}" var="album">
-			<tr><td>${album}</td><td>${album.description}</td></tr> 
+			<c:if test="${album.id != topic.id }">
+				<tr>
+					<td><a href="album.do?id=${album.id}">${album}</a></td>
+					<td>${album.description}</td>
+				</tr>
+			</c:if> 
 		</c:forEach>
 	</table>
 </body>

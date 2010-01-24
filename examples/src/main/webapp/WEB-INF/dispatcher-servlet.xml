@@ -31,12 +31,16 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 		</property>
 	</bean>
 
-	<bean name="/album.do" class="no.delfidata.topicmaps.examples.gui.AlbumController">
+	<bean name="/album.do" class="no.delfidata.topicmaps.examples.gui.SimpleTopicMapObjectController">
 		<property name="viewName" value="album" />
 	</bean>
 
-	<bean name="/artist.do" class="no.delfidata.topicmaps.examples.gui.ArtistController">
+	<bean name="/artist.do" class="no.delfidata.topicmaps.examples.gui.SimpleTopicMapObjectController">
 		<property name="viewName" value="artist" />
+	</bean>
+
+	<bean name="/listArtists.do" class="no.delfidata.topicmaps.examples.gui.ListArtistsController">
+		<property name="viewName" value="listArtists" />
 	</bean>
 
 	<bean name="/createAlbum.do"

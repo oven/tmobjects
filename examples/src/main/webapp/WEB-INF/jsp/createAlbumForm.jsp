@@ -7,12 +7,27 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Insert title here</title>
+	<title>Add album to ${artist}</title>
 </head>
 <body>
-<spring:form>
-	<spring:input path="name"/>
-	<spring:input path="description"/>
+<h1>Add album to ${artist}</h1>
+<spring:form  action="createAlbum.do">
+	<table>
+		<tr>
+			<td>Name:</td>
+			<td><spring:input path="name"/></td>
+		</tr>
+		<tr>
+			<td>Description:</td>
+			<td><spring:input path="description"/></td>
+		</tr>
+		<tr>
+			<td>Album Cover URL:</td>
+			<td><spring:input path="cover"/></td>
+		</tr>
+		
+	</table>
+	<spring:hidden path="artistId"/>
 	<input type="submit"/>
 </spring:form>
 </body>

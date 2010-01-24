@@ -141,4 +141,10 @@ public class TopicMapObjectTest {
 		assertEquals( 1, psis.size() );
 		assertEquals( "http://psi.example.org/blapp", ((LocatorIF)psis.iterator().next()).getAddress() );
 	}
+
+	@Test
+	public void getTopicMapObjectsByType() {
+		List<Artist> result = repository.getByType( Artist.class );
+		assertEquals( 3, result.size() );
+	}
 }

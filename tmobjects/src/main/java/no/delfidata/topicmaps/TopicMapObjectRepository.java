@@ -10,11 +10,14 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 
+import org.apache.commons.collections.map.SingletonMap;
+
 public class TopicMapObjectRepository {
 
 	private static ThreadLocal<TopicMapObjectRepository> threadBoundInstance = new ThreadLocal<TopicMapObjectRepository>();
 	private final Map<String, Class<? extends TopicMapObject>> classes = new HashMap<String, Class<? extends TopicMapObject>>();
 	private TopicMapUtil util;
+	private TopicMapIF tm;
 
 	public TopicMapObjectRepository() {}
 
@@ -23,6 +26,7 @@ public class TopicMapObjectRepository {
 	}
 
 	public void setTopicMap( TopicMapIF tm ) {
+		this.tm = tm;
 		this.util = new TopicMapUtil( tm );
 	}
 
@@ -52,6 +56,19 @@ public class TopicMapObjectRepository {
 		TopicIF topic = util.getTopicByPsi( psi );
 		if (null == topic) throw new TopicNotFoundException( psi );
 		return createInstance( topic );
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T extends TopicMapObject> List<T> getByType( Class<T> theclass ) {
+		String psi = theclass.getAnnotation( Psi.class ).value();
+		TopicIF type = util.getTopicByPsi( psi );
+		TopicMapTemplate template = new TopicMapTemplate( tm );
+		List<TopicIF> topics = template.queryForArray( "instance-of($topic, %type%)?", new SingletonMap( "type", type ) );
+		return createInstances( theclass, topics );
+	}
+
+	public TopicMapObject getById( String topicId ) {
+		return createInstance( (TopicIF)tm.getObjectById( topicId ) );
 	}
 
 	public void addClass( Class<? extends TopicMapObject> theClass ) {

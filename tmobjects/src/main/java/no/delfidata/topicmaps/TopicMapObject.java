@@ -126,6 +126,10 @@ public abstract class TopicMapObject {
 		return topic;
 	}
 
+	public String getId() {
+		return topic.getObjectId();
+	}
+
 	public String getDescription() {
 		return getOccurrenceValue( "http://psi.ontopia.net/ontology/description" );
 	}

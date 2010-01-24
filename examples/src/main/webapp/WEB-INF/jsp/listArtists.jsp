@@ -5,19 +5,19 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Artist: ${topic.name}</title>
+	<title>List of artists</title>
 </head>
 <body>
-	<h1>${topic.name}</h1>
-	Hometown: ${topic.hometown}
-	<p>${topic.description}</p>
-	<h2>Albums:</h2>
+	<h1>Artists</h1>
 	<table>
-		<tr><th>Title</th><th>Description</th></tr>
-		<c:forEach items="${topic.albums}" var="album">
-			<tr><td><a href="album.do?id=${album.id}">${album}</a></td><td>${album.description}</td></tr> 
+		<tr><th>Name</th></tr>
+		<c:forEach items="${artists}" var="artist">
+			<tr>
+				<td>
+					<a href="artist.do?id=${artist.id}">${artist}</a> 
+				</td>
+			</tr> 
 		</c:forEach>
 	</table>
-	<a href="createAlbum.do?artistId=${topic.id}">Add a new album</a>
 </body>
 </html>
